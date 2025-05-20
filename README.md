@@ -1,4 +1,4 @@
-# Supabase PDF Upload App (Next.js 13+ with App Router)
+# Interactive Job Description Submission Portal
 
 A simple form-based application built with **Next.js (App Router)** and **Supabase**, allowing users to upload a PDF along with their first and last name. Data is saved in Supabase PostgreSQL, and PDFs are stored in Supabase Storage.
 
