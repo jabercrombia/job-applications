@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Supabase PDF Upload App (Next.js 13+ with App Router)
 
-## Getting Started
+A simple form-based application built with **Next.js (App Router)** and **Supabase**, allowing users to upload a PDF along with their first and last name. Data is saved in Supabase PostgreSQL, and PDFs are stored in Supabase Storage.
 
-First, run the development server:
+## 🚀 Features
+
+- 📄 PDF file upload
+- 👤 Collects first name, last name, email, phone, LinkedIn, and website
+- 💾 Stores files in Supabase Storage
+- 🗃️ Saves metadata to a `resume_users` table
+- 🌗 Responsive dark mode support
+
+## 🛠️ Technologies
+
+- [Next.js 13+ (App Router)](https://nextjs.org/docs/app)
+- [Supabase](https://supabase.com/)
+- TypeScript
+- SCSS (optional styling)
+- Tailwind CSS
+
+## 🧰 Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/yourusername/supabase-upload-app.git
+cd supabase-upload-app
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+# or
+yarn
+```
+
+### 3. Setup `.env.local`
+
+Create a `.env.local` file in the root of your project with the following:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_public_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+```
+
+> ✅ `SUPABASE_SERVICE_ROLE_KEY` is **server-side only** — use it only inside API routes or server actions.
+
+### 4. Configure Supabase
+
+1. Create a bucket: `resume-uploads`
+2. Create a table: `resume_users` with fields:
+   - `id` (uuid, primary key, default: `uuid_generate_v4()`)
+   - `firstName` (text)
+   - `lastName` (text)
+   - `email` (text)
+   - `phone` (text)
+   - `linkedIn` (text)
+   - `website` (text)
+   - `pdf_path` (text)
+
+3. Enable Row Level Security and add an `INSERT` policy:
+
+```sql
+-- SQL Example for allowing insert
+create policy "Allow insert for authenticated"
+on public.resume_users
+for insert
+with check (auth.role() = 'authenticated');
+```
+
+Or bypass RLS using the **Service Role Key** in server routes (recommended for admin-level inserts).
+
+### 5. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 File Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+├── app/
+│   └── api/
+│       └── submit-user/
+│           └── route.ts         # API handler for submitting metadata
+├── components/
+│   └── UploadForm.tsx           # Form component
+├── lib/
+│   ├── supbase.ts               # Client for client-side usage
+│   └── supbase-admin.ts         # Admin client with service role
+├── styles/
+│   └── form.scss
+├── public/
+├── .env.local
+└── README.md
+```
 
-## Learn More
+## 🧪 Coming Soon
 
-To learn more about Next.js, take a look at the following resources:
+- Client-side validation
+- PDF preview before upload
+- Authentication (Supabase Auth)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT License.# job-applications
