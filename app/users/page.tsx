@@ -54,7 +54,7 @@ export default function Home() {
             <td>{user.phone}</td>
             <td>{user.linkedIn && <Link href={user.linkedIn}>LinkedIn</Link>}</td>
             <td>{user.website && <Link href={user.website}>Website</Link>}</td>
-            <td>{user.pdf_path && <Link href={user.pdf_path}>Download</Link>}</td>
+            <td>{user.pdf_path && <Link href={`/api/download-resume?path=${user.pdf_path}`}>Download</Link>}</td>
             <td>{dateFormat(user.created_at)}</td>
           </tr>
         ))}
