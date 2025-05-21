@@ -1,14 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 export default function UploadPage() {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [linkedIn, setLinkedIn] = useState('')
-  const [website, setWebsite] = useState('')
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -16,98 +12,87 @@ export default function UploadPage() {
     phone: '',
     linkedIn: '',
     website: '',
-  });
-  
+  })
+  const [pdfFile, setPdfFile] = useState<File | null>(null)
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setPdfFile(e.target.files[0])
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
     setLoading(true)
     setMessage('')
 
+    const data = new FormData()
+    Object.entries(formData).forEach(([key, value]) => {
+      data.append(key, value)
+    })
+    if (pdfFile) {
+      data.append('pdf', pdfFile)
+    }
+
+
+
     const res = await fetch('/api/submit-user', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName, lastName }),
+      body: data,     // <--- use data, not formData
+      // @ts-expect-error duplex required for Node.js fetch with streaming body
+      duplex: 'half',
     })
+    
+    
 
-    const result = await res.json()
+    let result = {}
+    try {
+      const text = await res.text()
+      result = text ? JSON.parse(text) : {}
+    } catch {
+      result = { error: 'Invalid server response' }
+    }
 
     if (res.ok) {
       setMessage('User saved!')
-      setFirstName('')
-      setLastName('')
-      setEmail('')
-      setPhone('')
-      setLinkedIn('')
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        linkedIn: '',
+        website: '',
+      })
+      setPdfFile(null)
     } else {
-      setMessage(`Error: ${result.error}`)
+      setMessage(`Error: ${result['error'] || 'Unknown error'}`)
     }
 
     setLoading(false)
   }
 
   return (
-    <>
-      <div className='w-1/2'>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <label>First Name</label>
-          <input
-            name="firstName"
-            type="text"
-            value={formData.firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-          <label>Last Name</label>
-          <input
-            name="lastName"
-            type="text"
-            value={formData.lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-          <label>Email</label>
-          <input
-            name="email"
-            type="text"
-            value={formData.email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <label>Phone</label>
-          <input
-            name="phone"
-            type="text"
-            value={formData.phone}
-            onChange={(e) => setPhone(e.target.value)}
-            required
-          />
-          <label>LinkedIn</label>
-          <input
-            name="linkedIn"
-            type="text"
-            value={formData.linkedIn}
-            onChange={(e) => setLinkedIn(e.target.value)}
-            required
-          />
-          <label>Website/Porfolio</label>
-          <input
-            name="website"
-            type="text"
-            value={formData.website}
-            onChange={(e) => setWebsite(e.target.value)}
-            required
-          />
-          <button type="submit" disabled={loading}>
-            {loading ? 'Saving...' : 'Submit'}
-          </button>
-          {message && <p>{message}</p>}
-        </form>
-      </div>
-    </>
+    <div className="w-full max-w-xl mx-auto p-6">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <Input name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} required />
+        <Input name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} required />
+        <Input name="email" placeholder="Email" value={formData.email} onChange={handleChange} type="email" />
+        <Input name="phone" placeholder="Phone" value={formData.phone} onChange={handleChange}  />
+        <Input name="linkedIn" placeholder="LinkedIn" value={formData.linkedIn} onChange={handleChange} />
+        <Input name="website" placeholder="Website/Portfolio" value={formData.website} onChange={handleChange} />
+        <Input type="file" accept="application/pdf" onChange={handleFileChange} required />
+        <Button type="submit" disabled={loading}>
+          {loading ? 'Saving...' : 'Submit'}
+        </Button>
+        {message && <p>{message}</p>}
+      </form>
+    </div>
   )
 }
