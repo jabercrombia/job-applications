@@ -5,7 +5,7 @@ export async function GET() {
   const { data, error } = await supabaseAdmin
     .from('resume_users')
     .select('*')
-    .order('created_at', { ascending: false }) // optional sorting
+    .order('created_at', { ascending: false }) 
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

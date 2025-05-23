@@ -4,8 +4,56 @@ import { useEffect, useState } from 'react'
 import dateFormat from '../../lib/dateformat'
 import Link from 'next/link'
 
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import '../styles/components/table.scss';
+
+
+const categories = ['first name', 'last name', 'email', 'phone', 'linkedIn', 'website', 'pdf_path', 'created_at'];
+
 export default function Home() {
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState<Array<{
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    linkedIn: string;
+    website: string;
+    pdf_path: string;
+    created_at: string;
+  }>>([]);
+
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' }>({
+    key: 'firstName',
+    direction: 'desc',
+  });
+
+  const handleSort = (column: string) => {
+    setSortConfig((prev) => ({
+      key: column,
+      direction: prev.key === column && prev.direction === 'asc' ? 'desc' : 'asc',
+    }));
+  };
+  
+
+  const sortedUsers = [...users].sort((a, b) => {
+    const { key, direction } = sortConfig;
+    const aVal = a[key as keyof typeof a] ?? '';
+    const bVal = b[key as keyof typeof b] ?? '';
+  
+    if (typeof aVal === 'string' && typeof bVal === 'string') {
+      return direction === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+    }
+  
+    return 0;
+  });
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -17,48 +65,59 @@ export default function Home() {
     fetchUsers()
   }, [])
 
-
-
   return (
     <div className="container mx-auto">
       <h1>Users</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>LinkedIn</th>
-            <th>Website</th>
-            <th>PDF Path</th>
-            <th>Created At</th>
-          </tr>
-        </thead>
-        {users.map((
-          user: {
-            id:string, 
-            firstName: string, 
-            lastName: string, 
-            email: string,
-            phone: string,
-            linkedIn: string,
-            website: string,
-            pdf_path: string,
-            created_at: string,
-          }) => (
-          <tr key={user.id}>
-            <td>{user.firstName}</td>
-            <td>{user.lastName}</td>
-            <td>{user.email}</td>
-            <td>{user.phone}</td>
-            <td>{user.linkedIn && <Link href={user.linkedIn}>LinkedIn</Link>}</td>
-            <td>{user.website && <Link href={user.website}>Website</Link>}</td>
-            <td>{user.pdf_path && <Link href={`/api/download-resume?path=${user.pdf_path}`}>Download</Link>}</td>
-            <td>{dateFormat(user.created_at)}</td>
-          </tr>
-        ))}
-      </table>
+      <TableContainer className='border-solid border-1 border-gray-300'>
+        <Table sx={{ minWidth: 650 }} stickyHeader aria-label="sticky table">
+          <TableHead className='uppercase'>
+          <TableRow>
+            {categories.map((category) => (
+              <TableCell
+                key={category}
+                sortDirection={sortConfig.key === category ? sortConfig.direction : false}
+              >
+                <TableSortLabel
+                  active={sortConfig.key === category}
+                  direction={sortConfig.key === category ? sortConfig.direction : 'asc'}
+                  onClick={() => handleSort(category)}
+                >
+                  {category}
+                </TableSortLabel>
+              </TableCell>
+            ))}
+          </TableRow>
+          </TableHead>
+          <TableBody>
+        
+          {sortedUsers.map((
+            user: {
+              id:string, 
+              firstName: string, 
+              lastName: string, 
+              email: string,
+              phone: string,
+              linkedIn: string,
+              website: string,
+              pdf_path: string,
+              created_at: string,
+            }) => (
+            <TableRow key={user.id}>
+              <TableCell>{user.firstName}</TableCell>
+              <TableCell>{user.lastName}</TableCell>
+              <TableCell><Link href={``}>{user.email}</Link></TableCell>
+              <TableCell>{user.phone}</TableCell>
+              <TableCell>{user.linkedIn && <Link href={user.linkedIn}>LinkedIn</Link>}</TableCell>
+              <TableCell>{user.website && <Link href={user.website}>Website</Link>}</TableCell>
+              <TableCell>{user.pdf_path && <Link href={`/api/download-resume?path=${user.pdf_path}`}>Download</Link>}</TableCell>
+              <TableCell>{dateFormat(user.created_at)}</TableCell>
+            </TableRow>
+          ))}
+    
+          </TableBody>
+        </Table>
+    </TableContainer>
+      
     </div>
   )
 }
