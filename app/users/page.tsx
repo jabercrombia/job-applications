@@ -12,7 +12,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import '../styles/components/table.scss';
+import '../../styles/components/table.scss';
 
 
 const categories = ['first name', 'last name', 'email', 'phone', 'linkedIn', 'website', 'pdf_path', 'created_at'];

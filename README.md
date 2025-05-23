@@ -88,12 +88,17 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 │       └── submit-user/
 │           └── route.ts         # API handler for submitting metadata
 ├── components/
-│   └── UploadForm.tsx           # Form component
+│   └── NewUser.tsx              # Form component
+├── users/
+│   └── page.tsx                 # User Table
 ├── lib/
 │   ├── supbase.ts               # Client for client-side usage
 │   └── supbase-admin.ts         # Admin client with service role
 ├── styles/
-│   └── form.scss
+│   └── _variables.scss
+│   └── components/
+│       └── form.scss
+│       └── table.scss
 ├── public/
 ├── .env.local
 └── README.md
