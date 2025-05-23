@@ -5,5 +5,5 @@ export default function Home() {
     <div className="container mx-auto">
     <NewUser/>
     </div>
-      );
+  );
 }
