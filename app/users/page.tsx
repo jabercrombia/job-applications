@@ -15,7 +15,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import '../../styles/components/table.scss';
 
 
-const categories = ['first name', 'last name', 'email', 'phone', 'linkedIn', 'website', 'pdf_path', 'created_at'];
+const categories = ['first name', 'last name', 'email', 'phone', 'linkedIn', 'website', 'pdf_path', 'match_score', 'created_at'];
 
 export default function Home() {
   const [users, setUsers] = useState<Array<{
@@ -27,6 +27,7 @@ export default function Home() {
     linkedIn: string;
     website: string;
     pdf_path: string;
+    match_score: number;
     created_at: string;
   }>>([]);
 
@@ -100,6 +101,7 @@ export default function Home() {
               linkedIn: string,
               website: string,
               pdf_path: string,
+              match_score: number,
               created_at: string,
             }) => (
             <TableRow key={user.id}>
@@ -110,6 +112,7 @@ export default function Home() {
               <TableCell>{user.linkedIn && <Link href={user.linkedIn}>LinkedIn</Link>}</TableCell>
               <TableCell>{user.website && <Link href={user.website}>Website</Link>}</TableCell>
               <TableCell>{user.pdf_path && <Link href={`/api/download-resume?path=${user.pdf_path}`}>Download</Link>}</TableCell>
+              <TableCell>{user.match_score}</TableCell>
               <TableCell>{dateFormat(user.created_at)}</TableCell>
             </TableRow>
           ))}

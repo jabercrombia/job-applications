@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import '../../styles/components/form.scss';
+// import '../../styles/components/form.scss';
 
 export default function UploadPage() {
   const [formData, setFormData] = useState({
@@ -34,46 +34,41 @@ export default function UploadPage() {
     setLoading(true)
     setMessage('')
 
-    const data = new FormData()
+    const formPayload = new FormData()
     Object.entries(formData).forEach(([key, value]) => {
-      data.append(key, value)
+      formPayload.append(key, value)
     })
     if (pdfFile) {
-      data.append('pdf', pdfFile)
+      formPayload.append('pdf', pdfFile)
     }
 
 
 
-    const res = await fetch('/api/submit-user', {
-      method: 'POST',
-      body: data,     // <--- use data, not formData
-      // @ts-expect-error duplex required for Node.js fetch with streaming body
-      duplex: 'half',
-    })
+    // const res = await fetch('/api/submit-user', {
+    //   method: 'POST',
+    //   body: data,     // <--- use data, not formData
+    //   // @ts-expect-error duplex required for Node.js fetch with streaming body
+    //   duplex: 'half',
+    // })
     
-    
-
-    let result = {}
     try {
-      const text = await res.text()
-      result = text ? JSON.parse(text) : {}
-    } catch {
-      result = { error: 'Invalid server response' }
-    }
-
-    if (res.ok) {
-      setMessage('User saved!')
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        linkedIn: '',
-        website: '',
+      // 👇 Call your FastAPI service (adjust if you proxy it)
+      const res = await fetch('http://127.0.0.1:8000/scan', {
+        method: 'POST',
+        body: formPayload,
       })
-      setPdfFile(null)
-    } else {
-      setMessage(`Error: ${result['error'] || 'Unknown error'}`)
+  
+      const data = await res.json()
+  
+      if (res.ok) {
+        console.log('Scan results:', data)
+        setMessage(`Match Score: ${data.match_score || 'N/A'}`)
+      } else {
+        setMessage(`Error: ${data.error || 'Failed to scan'}`)
+      }
+    } catch (err) {
+      console.error(err)
+      setMessage('Unexpected error')
     }
 
     setLoading(false)
