@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 // import '../../styles/components/form.scss';
 
-export default function UploadPage() {
+export default function UploadPage(data:{ jobDescription: string; jobTitle: string }) {
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -13,6 +14,8 @@ export default function UploadPage() {
     phone: '',
     linkedIn: '',
     website: '',
+    jobDescription: data.jobDescription,
+    jobTitle: data.jobTitle,
   })
   const [pdfFile, setPdfFile] = useState<File | null>(null)
   const [message, setMessage] = useState('')
@@ -61,7 +64,6 @@ export default function UploadPage() {
       const data = await res.json()
   
       if (res.ok) {
-        console.log('Scan results:', data)
         setMessage(`Match Score: ${data.match_score || 'N/A'}`)
       } else {
         setMessage(`Error: ${data.error || 'Failed to scan'}`)

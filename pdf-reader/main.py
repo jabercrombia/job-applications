@@ -45,16 +45,17 @@ async def scan_pdf(
     email: str = Form(""),
     phone: str = Form(""),
     linkedIn: str = Form(""),
-    website: str = Form("")
+    website: str = Form(""),
+    jobTitle: str = Form(""),
+    jobDescription: str = Form(""),
 ):
     try:
         contents = await pdf.read()
         resume_text = extract_text_from_pdf(contents)
 
-        vectorizer = TfidfVectorizer().fit_transform([resume_text, JOB_DESCRIPTION])
+        vectorizer = TfidfVectorizer().fit_transform([resume_text, jobDescription])
         score = cosine_similarity(vectorizer[0:1], vectorizer[1:2])[0][0]
         match_score = round(score * 100, 2)
-
         # Upload PDF to Supabase Storage with unique filename
         unique_filename = f"{uuid.uuid4()}_{pdf.filename}"
         file_path = f"resumes/{unique_filename}"
