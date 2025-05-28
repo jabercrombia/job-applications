@@ -1,5 +1,5 @@
 import { getJobDescriptionEntries } from "@/lib/api";
-import TabsWrapper from "../../components/TabsWrapper"; // Adjust if path differs
+import TabsWrapper from "@/app/components/TabsWrapper";
 
 interface Props {
   params: {
@@ -9,6 +9,9 @@ interface Props {
 
 export default async function Page({ params }: Props) {
   const entries = await getJobDescriptionEntries(params.slug);
+
+  // Optional: Debug log
+  console.log("Entries fetched:", entries);
 
   return (
     <div>
