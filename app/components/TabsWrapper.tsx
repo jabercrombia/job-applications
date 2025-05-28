@@ -34,9 +34,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function TabsWrapper({
-  entries,
-}: {
+export default function TabsWrapper({ entries,}: {
   entries: {
     jobDescriptionCollection: {
       items: {

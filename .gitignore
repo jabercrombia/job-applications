@@ -52,3 +52,4 @@ venv/
 my_env/
 env/
 */.venv
+.env.local

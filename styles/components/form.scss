@@ -1,5 +1,16 @@
 input {
     width: 100%;
     border: 1px solid #ccc;
-    color: black;
+    color: #000;
+}
+
+button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    &:hover {
+        background-color: #333;
+    }
 }
