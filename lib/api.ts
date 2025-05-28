@@ -1,7 +1,21 @@
+type JobDescriptionEntry = {
+  _id: string;
+  title: string;
+  description: string;
+};
 
+type JobDescriptionCollectionResponse = {
+  jobDescriptionCollection: {
+    items: JobDescriptionEntry[];
+  };
+};
 
-async function fetchGraphQL(query: string, variables?: Record<string, any>, preview = false): Promise<any> {
-  return fetch(
+async function fetchGraphQL<T>(
+  query: string,
+  variables?: Record<string, unknown>,
+  preview = false
+): Promise<{ data: T }> {
+  const response = await fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
     {
       method: "POST",
@@ -14,16 +28,25 @@ async function fetchGraphQL(query: string, variables?: Record<string, any>, prev
         }`,
       },
       body: JSON.stringify({ query, variables }),
-    },
-  ).then((response) => response.json());
-}
-  function extractJobCollectionEntries(fetchResponse: any): any {
-    return fetchResponse?.data;
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(`GraphQL request failed: ${response.statusText}`);
   }
-  
-  /** Fetches the items array for a given job description title */
-  export async function getJobDescriptionEntries(slug: string) {
-    const graphql = await fetchGraphQL(
+
+  return response.json();
+}
+
+function extractJobCollectionEntries(
+  fetchResponse: { data: JobDescriptionCollectionResponse }
+): JobDescriptionEntry[] {
+  return fetchResponse?.data?.jobDescriptionCollection?.items ?? [];
+}
+
+/** Fetches the items array for a given job description title */
+export async function getJobDescriptionEntries(slug: string): Promise<JobDescriptionEntry[]> {
+  const graphql = await fetchGraphQL<JobDescriptionCollectionResponse>(
     `query {
       jobDescriptionCollection(where: {slug: "${slug}"}) {
         items {
@@ -32,8 +55,8 @@ async function fetchGraphQL(query: string, variables?: Record<string, any>, prev
           description
         }
       }
-    }`,
-    )
-    return extractJobCollectionEntries(graphql);
-  }
-  
+    }`
+  );
+
+  return extractJobCollectionEntries(graphql);
+}
