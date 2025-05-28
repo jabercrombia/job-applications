@@ -34,20 +34,18 @@ function a11yProps(index: number) {
   };
 }
 
-interface Entries {
-  jobDescriptionCollection: {
-    items: {
-      description: string;
-      title: string;
-      _id: number;
-    }[];
-  };
-}
-
 export default function TabsWrapper({
   entries,
 }: {
-  entries: Entries;
+  entries: {
+    jobDescriptionCollection: {
+      items: {
+        description: string;
+        title: string;
+        _id: number;
+      }[];
+    };
+  };
 }) {
   const [value, setValue] = React.useState(0);
 
