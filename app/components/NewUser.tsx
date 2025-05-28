@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 // import '../../styles/components/form.scss';
 
-export default function UploadPage() {
+export default function UploadPage(data:{ jobDescription: string; jobTitle: string }) {
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -14,6 +14,8 @@ export default function UploadPage() {
     phone: '',
     linkedIn: '',
     website: '',
+    jobDescription: data.jobDescription,
+    jobTitle: data.jobTitle,
   })
   const [pdfFile, setPdfFile] = useState<File | null>(null)
   const [message, setMessage] = useState('')
