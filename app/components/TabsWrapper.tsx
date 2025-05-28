@@ -34,7 +34,8 @@ function a11yProps(index: number) {
   };
 }
 
-export default function TabsWrapper({ entries, slug }: { entries: any[], slug: string }) {
+
+export default function TabsWrapper({ entries, slug }: { entries: { _id: string; description: string; title: string; }[], slug: string }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -49,7 +50,7 @@ export default function TabsWrapper({ entries, slug }: { entries: any[], slug: s
           <Tab label="Apply" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      {entries.map((entry) => (
+      {entries.map((entry: {_id:string, description: string, title: string}) => (
         <div key={entry._id} className="p-4 m-2 rounded">
           <h2 className="font-semibold">{entry.title}</h2>
           <CustomTabPanel value={value} index={0}>

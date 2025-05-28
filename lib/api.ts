@@ -1,7 +1,7 @@
 // lib/api.ts
 export async function fetchGraphQL(
     query: string,
-    variables?: string | Record<string, any>,
+    variables?: string ,
     preview = false
   ): Promise<string> {
     const res = await fetch(
