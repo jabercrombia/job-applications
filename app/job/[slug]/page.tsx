@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import dateFormat from '../../../lib/dateformat'
-import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import Markdown from "react-markdown";
 import { Button } from "@/components/ui/button";
-
+import NewUser from "../../components/NewUser";
 export default function Home() {
   const params = useParams<{ slug: string }>()
   
@@ -45,7 +44,7 @@ export default function Home() {
 
           <Markdown>{item.description}</Markdown>
           <p className="text-sm text-gray-500">Expiration: {dateFormat(item.expiration)}</p>
-          <Link href={`/job/${item.id}`} className="text-blue-500 hover:underline">View Details</Link>
+          <NewUser jobTitle={item.title} jobDescription={item.description} />
         </div>
       ))}
     </div>
