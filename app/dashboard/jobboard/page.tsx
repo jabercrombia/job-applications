@@ -23,8 +23,12 @@ export default function FormPage() {
         setTitle('');
         setDescription('');
         setExpiration('');
-      } catch (error: any) {
-        setMessage(`Error: ${error.message}`);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setMessage(`Error: ${error.message}`);
+        } else {
+          setMessage('An unknown error occurred.');
+        }
       }
     });
   };
