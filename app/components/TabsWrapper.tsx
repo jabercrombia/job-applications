@@ -34,10 +34,20 @@ function a11yProps(index: number) {
   };
 }
 
+interface Entries {
+  jobDescriptionCollection: {
+    items: {
+      description: string;
+      title: string;
+      _id: number;
+    }[];
+  };
+}
+
 export default function TabsWrapper({
   entries,
 }: {
-  entries: { _id: string; description: string; title: string }[];
+  entries: Entries;
 }) {
   const [value, setValue] = React.useState(0);
 
@@ -45,6 +55,7 @@ export default function TabsWrapper({
     setValue(newValue);
   };
 
+  console.log('entries', entries);
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -58,7 +69,7 @@ export default function TabsWrapper({
           <Tab label="Apply" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      {entries.map((entry) => (
+      {entries.jobDescriptionCollection.items.map((entry : {description: string, title: string; _id: number}) => (
         <div key={entry._id} className="p-4 m-2 rounded">
           <h2 className="font-semibold">{entry.title}</h2>
           <CustomTabPanel value={value} index={0}>

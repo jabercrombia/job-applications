@@ -1,13 +1,7 @@
-type GraphQLResponse<T> = {
-  data?: T;
-};
 
-export async function fetchGraphQL<T>(
-  query: string,
-  variables?: Record<string, unknown>,
-  preview = false
-): Promise<GraphQLResponse<T>> {
-  const res = await fetch(
+
+async function fetchGraphQL(query: string, variables?: Record<string, any>, preview = false): Promise<any> {
+  return fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
     {
       method: "POST",
@@ -20,39 +14,26 @@ export async function fetchGraphQL<T>(
         }`,
       },
       body: JSON.stringify({ query, variables }),
-    }
-  );
-  return await res.json();
+    },
+  ).then((response) => response.json());
 }
-
-  export type JobDescriptionEntry = {
-    _id: string;
-    title: string;
-    description: string;
-  };
-  
-  type JobDescriptionQueryResult = {
-    jobDescriptionCollection: {
-      items: JobDescriptionEntry[];
-    };
-  };
-  
+  function extractJobCollectionEntries(fetchResponse: any): any {
+    return fetchResponse?.data;
+  }
   
   /** Fetches the items array for a given job description title */
-  export async function getJobDescriptionEntries(
-    slug: string
-  ): Promise<JobDescriptionEntry[]> {
-    const gql = `query($slug: String!) {
-      jobDescriptionCollection(where: { slug: $slug }) {
+  export async function getJobDescriptionEntries(slug: string) {
+    const graphql = await fetchGraphQL(
+    `query {
+      jobDescriptionCollection(where: {slug: "${slug}"}) {
         items {
           _id
           title
           description
         }
       }
-    }`;
-  
-    const response = await fetchGraphQL<JobDescriptionQueryResult>(gql, { slug });
-    return response.data?.jobDescriptionCollection.items ?? [];
+    }`,
+    )
+    return extractJobCollectionEntries(graphql);
   }
   
