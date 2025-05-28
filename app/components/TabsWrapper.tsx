@@ -36,10 +36,8 @@ function a11yProps(index: number) {
 
 export default function TabsWrapper({
   entries,
-  slug,
 }: {
   entries: { _id: string; description: string; title: string }[];
-  slug: string;
 }) {
   const [value, setValue] = React.useState(0);
 
@@ -68,7 +66,7 @@ export default function TabsWrapper({
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
             <h2>Submit an Application</h2>
-            <NewUser jobTitle={slug} jobDescription={entry.description} />
+            <NewUser jobTitle="slug" jobDescription={entry.description} />
           </CustomTabPanel>
         </div>
       ))}

@@ -15,7 +15,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <div>
-      <TabsWrapper entries={entries} slug={params.slug} />
+      <TabsWrapper entries={entries} />
     </div>
   );
 }
