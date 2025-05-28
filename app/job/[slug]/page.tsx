@@ -32,7 +32,7 @@ export default function Home() {
     <div className="container mx-auto">
       {entries.map((item, index) => (
         <div key={index} className="mb-4 p-4 border rounded">
-          <div className='grid grid-cols-2 justify-between items-center mb-2'>
+          <div className='!grid !grid-cols-2 justify-between items-center mb-2'>
           <div>
             <h2 className="text-xl font-bold">{item.title}</h2>
 
