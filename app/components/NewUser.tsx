@@ -56,7 +56,7 @@ export default function UploadPage(data:{ jobDescription: string; jobTitle: stri
     
     try {
       // 👇 Call your FastAPI service (adjust if you proxy it)
-      const res = await fetch('http://127.0.0.1:8000/scan', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_PDF_SCAN_URL}/scan`, {
         method: 'POST',
         body: formPayload,
       })
