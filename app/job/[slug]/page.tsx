@@ -1,13 +1,13 @@
 import { getJobDescriptionEntries } from "@/lib/api";
 import TabsWrapper from "@/app/components/TabsWrapper";
 
-interface Props {
-  params: {
-    slug: string;
-  };
+
+
+interface PageParams {
+  slug: string;
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params }: { params: PageParams }) {
   const entries = await getJobDescriptionEntries(params.slug);
 
   // Optional: Debug log
