@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import dateFormat from '../../lib/dateformat'
+import dateFormat from '@/lib/dateformat';
 import Link from 'next/link'
 
 import * as React from 'react';
@@ -12,8 +12,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import '../../styles/components/table.scss';
-
+import '../../../styles/components/table.scss';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const categories = ['first name', 'last name', 'email', 'phone', 'linkedIn', 'website', 'pdf_path', 'match_score', 'created_at'];
 
@@ -68,7 +68,7 @@ export default function Home() {
 
   return (
     <div className="container mx-auto">
-      <h1>Users</h1>
+      <h1>Applications</h1>
       <TableContainer className='border-solid border-1 border-gray-300'>
         <Table sx={{ minWidth: 650 }} stickyHeader aria-label="sticky table">
           <TableHead className='uppercase'>
