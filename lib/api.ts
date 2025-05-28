@@ -1,21 +1,7 @@
-type JobDescriptionEntry = {
-  _id: string;
-  title: string;
-  description: string;
-};
 
-type JobDescriptionCollectionResponse = {
-  jobDescriptionCollection: {
-    items: JobDescriptionEntry[];
-  };
-};
 
-async function fetchGraphQL<T>(
-  query: string,
-  variables?: Record<string, unknown>,
-  preview = false
-): Promise<{ data: T }> {
-  const response = await fetch(
+async function fetchGraphQL(query: string, variables?: Record<string, unknown>, preview = false): Promise<string> {
+  return fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
     {
       method: "POST",
@@ -28,25 +14,16 @@ async function fetchGraphQL<T>(
         }`,
       },
       body: JSON.stringify({ query, variables }),
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(`GraphQL request failed: ${response.statusText}`);
+    },
+  ).then((response) => response.json());
+}
+  function extractJobCollectionEntries(fetchResponse: string): string {
+    return fetchResponse?.data;
   }
-
-  return response.json();
-}
-
-function extractJobCollectionEntries(
-  fetchResponse: { data: JobDescriptionCollectionResponse }
-): JobDescriptionEntry[] {
-  return fetchResponse?.data?.jobDescriptionCollection?.items ?? [];
-}
-
-/** Fetches the items array for a given job description title */
-export async function getJobDescriptionEntries(slug: string): Promise<JobDescriptionEntry[]> {
-  const graphql = await fetchGraphQL<JobDescriptionCollectionResponse>(
+  
+  /** Fetches the items array for a given job description title */
+  export async function getJobDescriptionEntries(slug: string) {
+    const graphql = await fetchGraphQL(
     `query {
       jobDescriptionCollection(where: {slug: "${slug}"}) {
         items {
@@ -55,8 +32,8 @@ export async function getJobDescriptionEntries(slug: string): Promise<JobDescrip
           description
         }
       }
-    }`
-  );
-
-  return extractJobCollectionEntries(graphql);
-}
+    }`,
+    )
+    return extractJobCollectionEntries(graphql);
+  }
+  
