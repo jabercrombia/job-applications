@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation'
 import Markdown from "react-markdown";
 import { Button } from "@/components/ui/button";
 import NewUser from "../../components/NewUser";
+import Link from "next/link";
 export default function Home() {
   const params = useParams<{ slug: string }>()
   
@@ -37,13 +38,14 @@ export default function Home() {
 
           </div>
           <div>
-         <Button>Apply</Button>
+         <Link href="#apply"><Button>Apply</Button></Link>
 
             </div>
           </div>
 
           <Markdown>{item.description}</Markdown>
           <p className="text-sm text-gray-500">Expiration: {dateFormat(item.expiration)}</p>
+          <Link href="apply"></Link>
           <NewUser jobTitle={item.title} jobDescription={item.description} />
         </div>
       ))}
