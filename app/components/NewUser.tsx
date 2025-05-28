@@ -77,7 +77,7 @@ export default function UploadPage(data:{ jobDescription: string; jobTitle: stri
   }
 
   return (
-    <div className="w-full max-w-xl mx-auto p-6">
+    <div className="p-4">
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} required />
         <Input name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} required />

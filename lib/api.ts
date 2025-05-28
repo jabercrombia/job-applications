@@ -1,9 +1,9 @@
 // lib/api.ts
 export async function fetchGraphQL(
     query: string,
-    variables?: Record<string, any>,
+    variables?: string | Record<string, any>,
     preview = false
-  ): Promise<any> {
+  ): Promise<string> {
     const res = await fetch(
       `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
       {
