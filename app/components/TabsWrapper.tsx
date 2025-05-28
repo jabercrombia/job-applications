@@ -57,6 +57,7 @@ export default function TabsWrapper({ entries, slug }: { entries: { _id: string;
             <Markdown>{entry.description}</Markdown>
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
+            <h2>Submit an Application</h2>
             <NewUser jobTitle={slug} jobDescription={entry.description} />
           </CustomTabPanel>
         </div>

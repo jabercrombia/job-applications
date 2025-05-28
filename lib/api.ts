@@ -1,9 +1,9 @@
 // lib/api.ts
 export async function fetchGraphQL(
     query: string,
-    variables?: string ,
+    variables?: Record<string, any>,
     preview = false
-  ): Promise<string> {
+  ): Promise<{ data?: Record<string, any> }> {
     const res = await fetch(
       `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
       {
@@ -19,7 +19,7 @@ export async function fetchGraphQL(
         body: JSON.stringify({ query, variables }),
       }
     );
-    return res.json();
+    return await res.json();
   }
   
   /** Fetches the items array for a given job description title */
