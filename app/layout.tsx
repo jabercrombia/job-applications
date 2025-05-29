@@ -11,7 +11,7 @@ import Header from "./components/ux/Header";
 
 export const metadata = {
   title: `jabercrombia`,
-  description: `This is a blog built with Next.js and`,
+  description: `This is a job submission portal`,
   keywords: ['Next.js', 'React', 'JavaScript'],
   authors: [{ name: 'Justin Abercrombia', url: 'http://www.github.com/jabercrombia' }],
   creator: 'Justin Abercrombia',
