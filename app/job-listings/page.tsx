@@ -14,14 +14,14 @@ export default function Home() {
 
   useEffect(() => {
     const fetchEntry = async () => {
-      const res = await fetch('/api/job-entries?includeExpired=true');
+      const res = await fetch('/api/job-entries');
       const data = await res.json();
       setEntries(data);
     }
 
     fetchEntry();
   }, []);
-console.log('entries',entries);
+
   return (
     <div className="container mx-auto">
       <h1>Listings</h1>
@@ -30,11 +30,10 @@ console.log('entries',entries);
           <div className='flex justify-between items-center mb-2'>
             <div>
               <h2 className="text-xl font-bold">{item.title}</h2>
-              <p>{new Date(item.expiration) < new Date() ? 'Expired' : `Expiration: ${new Date(item.expiration).toLocaleDateString()}`}</p>
-              <Link href={`/job/${item.job_posting_key}`}>Go to Post</Link>
+              <Link href={`/job/${item.job_posting_key}`} className="text-sm">Go to Job Listing</Link>
             </div>
             <div>
-              <Link href={`/dashboard/edit-entry/${item.job_posting_key}`}>Edit</Link>
+              <p className="text-sm text-gray-500">Expiration: {new Date(item.expiration).toLocaleDateString()}</p>
             </div>
           </div>
         </div>

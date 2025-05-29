@@ -13,9 +13,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import '../../../styles/components/table.scss';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
-const categories = ['first name', 'last name', 'email', 'phone', 'linkedIn', 'website', 'pdf_path', 'match_score', 'created_at'];
+const categories = ['first name', 'last name', 'email', 'phone', 'linkedIn', 'website', 'resume', 'match score', 'submitted at'];
 
 export default function Home() {
   const [users, setUsers] = useState<Array<{

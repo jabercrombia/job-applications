@@ -22,7 +22,6 @@ export default function Home() {
     fetchEntry();
   }, []);
 
-  console.log('entries', entries);
   return (
     <div className="container mx-auto">
       {entries.map((item, index) => (
