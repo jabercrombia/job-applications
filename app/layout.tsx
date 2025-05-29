@@ -5,9 +5,6 @@ import { Analytics } from "@vercel/analytics/next"
 import Footer from "./components/ux/Footer";
 import Header from "./components/ux/Header";
 
-
-
-
 export const metadata = {
   title: `jabercrombia`,
   description: `This is a job submission portal`,
