@@ -3,7 +3,6 @@ import { supabaseAdmin } from '../../../lib/supbase-admin';
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const includeExpired = url.searchParams.get('includeExpired') === 'true';
 
   let query = supabaseAdmin
     .from('categories')
