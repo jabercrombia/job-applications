@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchEntry = async () => {
-      const res = await fetch('/api/job-entries');
+      const res = await fetch('/api/job-entries?includeExpired=true');
       const data = await res.json();
       setEntries(data);
     }
