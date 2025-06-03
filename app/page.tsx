@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import ListingTable from "@/app/components/table/ListingTable";
 
 export default function Home() {
   const [entries, setEntries] = useState<Array<{
@@ -22,23 +22,30 @@ export default function Home() {
     fetchEntry();
   }, []);
 
+
+  const columns = Object.keys(entries);
+
+  console.log(columns);
   return (
     <div className="container mx-auto">
-      {entries.map((item, index) => (
-        <div key={index} className="mb-4 p-4 border rounded">
-          <div className='!grid !grid-cols-2 justify-between items-center mb-2'>
-            <div>
-              <h2 className="text-xl font-bold">{item.title}</h2>
+      <div className="text-center">
+        <h1>Find Your Dream Job Today</h1>
+        <p>Search job listings and find the perfect match for your career goals.</p>
+      </div>
+      <div className="flex w-full">
+        <div className="w-1/6">
+          <h2>Categories</h2>
+          {entries.map((elem,index) => (
+            <div key={index}>
+            {elem.category}
             </div>
-            <div>
-              <Link href={`/job/${item.job_posting_key}`}><button className="bg-blue-500 text-white px-4 py-2 rounded">Apply</button></Link>
-            </div>
-          </div>
-
-          <p className="text-sm text-gray-500">Expiration: {new Date(item.expiration).toLocaleDateString()}</p>
-          <a href={`/job/${item.id}`} className="text-blue-500 hover:underline">View Details</a>
+          ))}
         </div>
-      ))}
+        <div className="w-5/6">
+          <h2>Postings</h2>
+          <ListingTable data={entries}/>
+        </div>
+      </div>
     </div>
   );
 }

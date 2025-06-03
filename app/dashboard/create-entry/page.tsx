@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import { createJob } from '@/app/actions/createJob';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,22 @@ export default function FormPage() {
   const [expiration, setExpiration] = useState('');
   const [message, setMessage] = useState('');
   const [isPending, startTransition] = useTransition();
+  const [category,setCategory] = useState('');
+
+  type Category = {
+    category: string;
+  };
+  const [jobCategory,setJobCategory] = useState<Category[]>([]);
+
+    useEffect(() => {
+      const fetchEntry = async () => {
+        const res = await fetch('/api/categories');
+        const data = await res.json();
+        setJobCategory(data);
+      }
+  
+      fetchEntry();
+    }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,6 +49,7 @@ export default function FormPage() {
     });
   };
 
+  console.log(category)
   return (
     <div className="container mx-auto p-6">
       <h1>Create Job Entry</h1>
@@ -46,6 +63,19 @@ export default function FormPage() {
             required
             className="w-full border rounded p-2"
           />
+        </div>
+        <div>
+          <label className="block font-semibold">Category</label>
+          <select
+            value={category}
+            onChange={e => setCategory(e.target.value)}
+            required
+            className="w-full border rounded p-2"
+          >
+            {jobCategory.map((elem : {category : string}, index: number)=>(
+              <option key={index}>{elem.category}</option>
+            ))}
+            </select>
         </div>
         <div>
           <label className="block font-semibold">Description</label>

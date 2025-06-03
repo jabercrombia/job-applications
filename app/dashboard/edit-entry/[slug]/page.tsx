@@ -16,9 +16,14 @@ export default function FormPage() {
   const [expiration, setExpiration] = useState('');
   const [message, setMessage] = useState('');
   const [isPending, startTransition] = useTransition();
+  const [category, setCategory] = useState('');
 
   const params = useParams<{ slug: string }>();
 
+  type Category = {
+    category_name: string;
+  };
+  const [jobCategory,setJobCategory] = useState<Category[]>([]);
 
   useEffect(() => {
     const fetchEntry = async () => {
@@ -27,7 +32,19 @@ export default function FormPage() {
       setDescription(data.description);
       setTitle(data.title);
       setExpiration(data.expiration);
+      setCategory(data.category);
       setID(data.id);
+    }
+
+    fetchEntry();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchEntry = async () => {
+      const res = await fetch('/api/categories');
+      const data = await res.json();
+      setJobCategory(data);
     }
 
     fetchEntry();
@@ -38,12 +55,13 @@ export default function FormPage() {
 
     startTransition(async () => {
       try {
-        await updateJob({ id, title, description, expiration });
-        setMessage('Entry created successfully!');
+        await updateJob({ id, title, description, expiration, category });
+        setMessage('Entry updated successfully!');
         setTitle('');
         setDescription('');
         setExpiration('');
         setID('');
+        setCategory('');
       } catch (error: unknown) {
         if (error instanceof Error) {
           setMessage(`Error: ${error.message}`);
@@ -53,7 +71,6 @@ export default function FormPage() {
       }
     });
   };
-
 
   return (
     <div className="container mx-auto p-6">
@@ -68,6 +85,20 @@ export default function FormPage() {
             required
             className="w-full border rounded p-2"
           />
+        </div>
+        <div>
+          <label className="block font-semibold">Category</label>
+          <select
+            value={category}
+            onChange={e => setCategory(e.target.value)}
+            required
+            className="w-full border rounded p-2"
+          >
+            <option value="" disabled>Select a Category</option>
+            {jobCategory?.map((elem,index) => (
+              <option key={index} value={elem.category_name}>{elem.category_name}</option>
+            ))}
+          </select>
         </div>
         <div>
           <label className="block font-semibold">Description</label>

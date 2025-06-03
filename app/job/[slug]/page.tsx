@@ -1,17 +1,18 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import dateFormat from '../../../lib/dateformat'
-import { useParams } from 'next/navigation'
+import { useEffect, useState } from 'react';
+import {formatUTCToMMDDYYYY} from '../../../lib/dateformat';
+import { useParams } from 'next/navigation';
 import Markdown from "react-markdown";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import NewUser from "../../components/NewUser";
 import Link from "next/link";
 import "../../../styles/components/form.scss";
+import "../../../styles/components/jd.scss";
 
 export default function Home() {
-  const params = useParams<{ slug: string }>()
-  
+  const params = useParams<{ slug: string }>();
+
   const [entries, setEntries] = useState<{
     id: string;
     title: string;
@@ -20,23 +21,37 @@ export default function Home() {
     created_at?: string;
   } | null>(null);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchEntry = async () => {
-      const res = await fetch(`/api/job-entry?key=${params.slug}`);
-      const data = await res.json();
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/job-entry?key=${params.slug}`);
+        const data = await res.json();
 
-      // Only set if not expired
-      const now = new Date();
-      const expiration = new Date(data.expiration);
-      if (expiration > now) {
-        setEntries(data);
-      } else {
+        const now = new Date();
+        const expiration = new Date(data.expiration);
+
+        if (expiration > now) {
+          setEntries(data);
+        } else {
+          setEntries(null);
+        }
+      } catch (err) {
+        console.error('Failed to fetch entry', err);
         setEntries(null);
+      } finally {
+        setLoading(false);
       }
-    }
+    };
 
     fetchEntry();
   }, [params.slug]);
+
+  if (loading) {
+    return <div className="text-center py-10">Loading...</div>;
+  }
 
   return (
     <div className="container mx-auto">
@@ -51,7 +66,7 @@ export default function Home() {
             </div>
           </div>
           <Markdown>{entries.description}</Markdown>
-          <p className="text-sm text-gray-500 pt-4">Expiration: {dateFormat(entries.expiration)}</p>
+          <p className="text-sm text-gray-500 pt-4">Posting will be closed on {formatUTCToMMDDYYYY(entries.expiration)}</p>
           <hr className='mt-3'/>
           <section id="apply" className='right'>Apply Now</section>
           <NewUser jobTitle={entries.title} jobDescription={entries.description} />

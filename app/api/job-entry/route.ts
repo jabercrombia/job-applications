@@ -14,7 +14,7 @@ export async function GET(req: Request) {
 
   let query = supabaseAdmin
     .from('job_entries')
-    .select('id, title, description, expiration, created_at, job_posting_key')
+    .select('id, title, description, expiration, category, created_at, job_posting_key')
     .eq('job_posting_key', key);
 
   if (!includeExpired) {

@@ -16,7 +16,6 @@ load_dotenv(dotenv_path)
 
 SUPABASE_URL = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
-JOB_DESCRIPTION = os.getenv("JOB_DESCRIPTION", "Enter your default job description here")
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 

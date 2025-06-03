@@ -18,19 +18,34 @@ function Header() {
         'applications' : '/dashboard/applications',
     }
 
+    const nav = {
+        'home': '/',
+        'login' : '/dashboard/listings',
+    }
+
     return (
         <header>
             <div className='container mx-auto'>
-                {dashboard && (
+                {dashboard ? (
                     <NavigationMenu>
-                    <NavigationMenuList>
-                    {Object.entries(dashboardnav).map(([label, path], index) => (
-                        <NavigationMenuItem key={index}>
-                        <a href={path}>{label}</a>
-                        </NavigationMenuItem>
-                    ))}
-                    </NavigationMenuList>
-                </NavigationMenu>
+                        <NavigationMenuList>
+                        {Object.entries(dashboardnav).map(([label, path], index) => (
+                            <NavigationMenuItem key={index}>
+                            <a href={path}>{label}</a>
+                            </NavigationMenuItem>
+                        ))}
+                        </NavigationMenuList>
+                    </NavigationMenu>
+                ):(
+                    <NavigationMenu>
+                        <NavigationMenuList>
+                        {Object.entries(nav).map(([label, path], index) => (
+                            <NavigationMenuItem key={index}>
+                            <a href={path}>{label}</a>
+                            </NavigationMenuItem>
+                        ))}
+                        </NavigationMenuList>
+                    </NavigationMenu>
                 )}
             </div>
         </header>
