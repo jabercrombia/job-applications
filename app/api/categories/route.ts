@@ -5,8 +5,6 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const includeExpired = url.searchParams.get('includeExpired') === 'true';
 
-  const now = new Date().toISOString();
-
   let query = supabaseAdmin
     .from('categories')
     .select('category_name')
