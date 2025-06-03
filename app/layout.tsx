@@ -6,13 +6,13 @@ import Footer from "./components/ux/Footer";
 import Header from "./components/ux/Header";
 
 export const metadata = {
-  title: `jabercrombia`,
+  title: `job application submission`,
   description: `This is a job submission portal`,
-  keywords: ['Next.js', 'React', 'JavaScript'],
+  keywords: ['Next.js', 'React', 'JavaScript','postgresql'],
   authors: [{ name: 'Justin Abercrombia', url: 'http://www.github.com/jabercrombia' }],
   creator: 'Justin Abercrombia',
   openGraph: {
-    images: '/homepage/homepage_thumb.png',
+    images: '/screenshot/homepage.png',
   },
 };
 
