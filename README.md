@@ -1,6 +1,6 @@
 
 # Interactive Job Description Submission Portal
-
+![homepage](/public/screenshot/homepage.png)
 A simple form-based application built with **Next.js (App Router)**, **Supabase**, and a Python microservice that scans resumes and matches them against a job description using TF-IDF and cosine similarity. Users upload a PDF and fill in personal info. The data is saved in Supabase PostgreSQL, and PDFs are stored in Supabase Storage.
 
 ---

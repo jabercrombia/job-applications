@@ -7,6 +7,7 @@ export default function Home() {
   const [entries, setEntries] = useState<Array<{
     id: string;
     title: string;
+    category: string;
     expiration: string;
     created_at?: string;
     job_posting_key?: string;
@@ -22,10 +23,20 @@ export default function Home() {
     fetchEntry();
   }, []);
 
+  const categoryCounts: { [key: string]: number } = {};
 
-  const columns = Object.keys(entries);
+  entries.forEach((elem) => {
+    if (categoryCounts[elem.category]){
+      categoryCounts[elem.category] = categoryCounts[elem.category]+=1 ;
+    } 
+    else {
+      categoryCounts[elem.category] = 1;
+    }
+  });
 
-  console.log(columns);
+  console.log('categoryCounts',categoryCounts);
+
+
   return (
     <div className="container mx-auto">
       <div className="text-center">
@@ -35,10 +46,8 @@ export default function Home() {
       <div className="flex w-full">
         <div className="w-1/6">
           <h2>Categories</h2>
-          {entries.map((elem,index) => (
-            <div key={index}>
-            {elem.category}
-            </div>
+          {Object.entries(categoryCounts).map(([category,count],index)=>(
+            <div key={index}>{category} ({count})</div>
           ))}
         </div>
         <div className="w-5/6">
