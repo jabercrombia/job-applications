@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '../../../lib/supbase-admin';
 
-export async function GET(req: Request) {
-  const url = new URL(req.url);
+export async function GET() {
 
-  let query = supabaseAdmin
+  const query = supabaseAdmin
     .from('categories')
     .select('category_name')
     .order('category_name', { ascending: false });
