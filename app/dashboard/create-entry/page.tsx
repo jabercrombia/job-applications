@@ -34,11 +34,12 @@ export default function FormPage() {
 
     startTransition(async () => {
       try {
-        await createJob({ title, description, expiration });
+        await createJob({ title, description, expiration, category });
         setMessage('Entry created successfully!');
         setTitle('');
         setDescription('');
         setExpiration('');
+        setCategory('');
       } catch (error: unknown) {
         if (error instanceof Error) {
           setMessage(`Error: ${error.message}`);
