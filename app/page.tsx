@@ -34,9 +34,6 @@ export default function Home() {
     }
   });
 
-  console.log('categoryCounts',categoryCounts);
-
-
   return (
     <div className="container mx-auto">
       <div className="text-center">

@@ -6,7 +6,7 @@ type JobEntry = {
     title: string;
     expiration: string;
     category: string;
-    job_posting_key: string;
+    job_posting_key?: string;
   };
   
   type TableProps = {
