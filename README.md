@@ -174,12 +174,13 @@ This will start your server at [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
 
-## 🧪 Coming Soon
+## Listings Page
+![homepage](/public/screenshot/listings.png)
+This page displays a list of all job posts. Each listing includes key details like title, category, and submission date. You can view or edit any job post directly from this page.
 
-- Client-side validation
-- PDF preview before upload
-- Authentication (Supabase Auth)
-
+## Create Job Entry
+![entry](/public/screenshot/entry.png)
+ Fill out the required fields such as job title, category, description, and expiration date. Once submitted, the job entry will be saved to the database and automatically appear in the main listings table, where it can be viewed, edited, or deleted as needed.
 ---
 
 ## 📄 License

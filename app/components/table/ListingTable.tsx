@@ -20,7 +20,6 @@ export default function Table({ data }: TableProps) {
     const fetchCategories = async () => {
       const res = await fetch("/api/categories");
       const data = await res.json();
-      setCategories(data); // assuming the API returns a string[]
     };
 
     fetchCategories();
