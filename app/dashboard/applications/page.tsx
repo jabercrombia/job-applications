@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import dateFormat from '@/lib/dateformat';
-import Link from 'next/link'
+import {formatUTCToMMDDYY} from "@/lib/dateformat"
+import Link from 'next/link';
 
 import * as React from 'react';
 import Table from '@mui/material/Table';
@@ -14,7 +14,7 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import '../../../styles/components/table.scss';
 
-const categories = ['first name', 'last name', 'email', 'phone', 'linkedIn', 'website', 'resume', 'match score', 'submitted at'];
+const categories = ['first name', 'last name', 'email', 'phone', 'linkedIn','title', 'category','website', 'resume', 'match score', 'submitted at'];
 
 export default function Home() {
   const [users, setUsers] = useState<Array<{
@@ -28,10 +28,12 @@ export default function Home() {
     pdf_path: string;
     match_score: number;
     created_at: string;
+    category: string,
+    title: string
   }>>([]);
 
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' }>({
-    key: 'firstName',
+    key: 'created_at',
     direction: 'desc',
   });
 
@@ -42,8 +44,6 @@ export default function Home() {
     }));
   };
 
-  console.log(users)
-  
 
   const sortedUsers = [...users].sort((a, b) => {
     const { key, direction } = sortConfig;
@@ -104,6 +104,8 @@ export default function Home() {
               pdf_path: string,
               match_score: number,
               created_at: string,
+              category: string,
+              title: string,
             }) => (
             <TableRow key={user.id}>
               <TableCell>{user.firstName}</TableCell>
@@ -111,17 +113,19 @@ export default function Home() {
               <TableCell><Link href={``}>{user.email}</Link></TableCell>
               <TableCell>{user.phone}</TableCell>
               <TableCell>{user.linkedIn && <Link href={user.linkedIn}>LinkedIn</Link>}</TableCell>
+              <TableCell>{user.category}</TableCell>
+              <TableCell>{user.title}</TableCell>
               <TableCell>{user.website && <Link href={user.website}>Website</Link>}</TableCell>
-              <TableCell>{user.pdf_path && <Link href={`/api/download-resume?path=${user.pdf_path}`}>Download</Link>}</TableCell>
+              <TableCell>{user.pdf_path && <Link href={`/api/download-resume?path=${user.pdf_path}`}>View</Link>}</TableCell>
               <TableCell>{user.match_score}</TableCell>
-              <TableCell>{dateFormat(user.created_at)}</TableCell>
+              <TableCell>{formatUTCToMMDDYY(user.created_at)}</TableCell>
             </TableRow>
           ))}
     
           </TableBody>
         </Table>
     </TableContainer>
-      
+
     </div>
   )
 }

@@ -45,7 +45,8 @@ async def scan_pdf(
     phone: str = Form(""),
     linkedIn: str = Form(""),
     website: str = Form(""),
-    jobTitle: str = Form(""),
+    title: str = Form(""),
+    category: str = Form(""),
     jobDescription: str = Form(""),
 ):
     try:
@@ -79,7 +80,9 @@ async def scan_pdf(
             "linkedIn": linkedIn,
             "website": website,
             "pdf_path": file_path,
-            "match_score": match_score
+            "match_score": match_score,
+            "title": title,
+            "category": category,
         }
         insert_response = supabase.table("resume_users").insert(data).execute()
 

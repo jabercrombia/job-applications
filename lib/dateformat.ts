@@ -51,3 +51,23 @@ export function formatUTCToMMDDYYYY(utcString: string): string {
 
     return `${month}-${day}-${year}`;
 }
+
+/**
+ * Converts a UTC date string to MM-DD-YY format.
+ * 
+ * @param utcString - A date string in UTC format (e.g., "2025-05-30T00:00:00Z").
+ * @returns A string formatted as MM-DD-YY (e.g., "05-30-25").
+ */
+export function formatUTCToMMDDYY(utcString: string): string {
+    const date = new Date(utcString);
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const year = date.getUTCFullYear().toString().slice(-2); 
+
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+
+    return `${month}-${day}-${year}`;
+}
+
+

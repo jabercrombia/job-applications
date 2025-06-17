@@ -24,7 +24,7 @@ export async function GET(req: Request) {
     status: 200,
     headers: {
       'Content-Type': 'application/pdf',
-      'Content-Disposition': `attachment; filename="${filePath.split('/').pop()}"`,
+      'Content-Disposition': `inline; filename="${filePath.split('/').pop()}"`,
     },
   })
 }

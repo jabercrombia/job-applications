@@ -69,7 +69,7 @@ export default function Home() {
           <p className="text-sm text-gray-500 pt-4">Posting will be closed on {formatUTCToMMDDYYYY(entries.expiration)}</p>
           <hr className='mt-3'/>
           <section id="apply" className='right'>Apply Now</section>
-          <NewUser jobTitle={entries.title} jobDescription={entries.description} />
+          <NewUser jobTitle={entries.title} jobDescription={entries.description} jobCategory={entries.category} />
         </div>
       ) : (
         <div className="text-center text-2xl text-red-500 py-10">This job posting has expired.</div>

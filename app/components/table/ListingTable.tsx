@@ -15,7 +15,6 @@ type TableProps = {
 };
 
 export default function Table({ data }: TableProps) {
-  const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchCategories = async () => {

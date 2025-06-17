@@ -3,3 +3,10 @@
 th {
     background-color: $grey !important;
 }
+
+td {
+    font-size: 12px !important;
+}
+tr:hover {
+    background-color: $grey;
+}

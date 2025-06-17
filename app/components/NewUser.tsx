@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-export default function UploadPage(data:{ jobDescription: string; jobTitle: string }) {
+export default function UploadPage(data:{ jobDescription: string; jobTitle: string, jobCategory: string }) {
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -14,8 +14,11 @@ export default function UploadPage(data:{ jobDescription: string; jobTitle: stri
     linkedIn: '',
     website: '',
     jobDescription: data.jobDescription,
-    jobTitle: data.jobTitle,
+    title: data.jobTitle,
+    category: data.jobCategory,
   })
+
+  console.log('formData', formData);
   const [pdfFile, setPdfFile] = useState<File | null>(null)
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
@@ -44,17 +47,9 @@ export default function UploadPage(data:{ jobDescription: string; jobTitle: stri
       formPayload.append('pdf', pdfFile)
     }
 
-
-
-    // const res = await fetch('/api/submit-user', {
-    //   method: 'POST',
-    //   body: data,     // <--- use data, not formData
-    //   // @ts-expect-error duplex required for Node.js fetch with streaming body
-    //   duplex: 'half',
-    // })
+    console.log('formPayload', formPayload);
     
     try {
-      // 👇 Call your FastAPI service (adjust if you proxy it)
       const res = await fetch(`${process.env.NEXT_PUBLIC_PDF_SCAN_URL}/scan`, {
         method: 'POST',
         body: formPayload,
@@ -63,7 +58,7 @@ export default function UploadPage(data:{ jobDescription: string; jobTitle: stri
       const data = await res.json()
   
       if (res.ok) {
-        setMessage(`Match Score: ${data.match_score || 'N/A'}`)
+        setMessage(`Thank you`)
       } else {
         setMessage(`Error: ${data.error || 'Failed to scan'}`)
       }
