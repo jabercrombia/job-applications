@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import ListingTable from "@/app/components/table/ListingTable";
+import Search from "./components/Search";
+import Link from "next/link";
 
 export default function Home() {
   const [entries, setEntries] = useState<Array<{
@@ -35,20 +37,21 @@ export default function Home() {
   });
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4">
       <div className="text-center">
         <h1>Find Your Dream Job Today</h1>
         <p>Search job listings and find the perfect match for your career goals.</p>
+        <Search/>
       </div>
-      <div className="flex w-full">
-        <div className="w-1/6">
+      <div className="flex flex-wrap w-full">
+        <div className="w-full md:w-1/6">
           <h2>Categories</h2>
           {Object.entries(categoryCounts).map(([category,count],index)=>(
-            <div key={index}>{category} ({count})</div>
+            <div key={index}><Link href={`#${category}`} className="capitalize">{category} ({count})</Link></div>
           ))}
         </div>
-        <div className="w-5/6">
-          <h2>Postings</h2>
+        <div className="w-full md:w-5/6 ">
+          <h2 className="text-xl pb-4">Postings</h2>
           <ListingTable data={entries}/>
         </div>
       </div>

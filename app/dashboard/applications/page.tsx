@@ -41,6 +41,8 @@ export default function Home() {
       direction: prev.key === column && prev.direction === 'asc' ? 'desc' : 'asc',
     }));
   };
+
+  console.log(users)
   
 
   const sortedUsers = [...users].sort((a, b) => {

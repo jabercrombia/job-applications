@@ -4,6 +4,7 @@ import { supabaseAdmin } from '../../../lib/supbase-admin';
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const includeExpired = url.searchParams.get('includeExpired') === 'true';
+  const category = url.searchParams.get('category');
 
   const now = new Date().toISOString();
 
@@ -13,6 +14,10 @@ export async function GET(req: Request) {
 
   if (!includeExpired) {
     query = query.or(`expiration.gt.${now},expiration.is.null`);
+  }
+
+  if(category){
+    query = query.eq('category', category);
   }
 
   query = query.order('created_at', { ascending: false });
