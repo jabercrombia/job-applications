@@ -110,7 +110,7 @@ export default function Home() {
             <TableRow key={user.id}>
               <TableCell>{user.firstName}</TableCell>
               <TableCell>{user.lastName}</TableCell>
-              <TableCell><Link href={``}>{user.email}</Link></TableCell>
+              <TableCell><Link href={`mailto:${user.email}`}>{user.email}</Link></TableCell>
               <TableCell>{user.phone}</TableCell>
               <TableCell>{user.linkedIn && <Link href={user.linkedIn}>LinkedIn</Link>}</TableCell>
               <TableCell>{user.category}</TableCell>

@@ -181,8 +181,9 @@ This page displays a list of all job posts. Each listing includes key details li
 ## Create Job Entry
 ![entry](/public/screenshot/entry.png)
  Fill out the required fields such as job title, category, description, and expiration date. Once submitted, the job entry will be saved to the database and automatically appear in the main listings table, where it can be viewed, edited, or deleted as needed.
+
+ ## Applications
+ ![applications](/public/screenshot/applications.png)
+The Application Dashboard displays a comprehensive list of all job applications submitted through the platform. Each entry includes candidate details such as name, email, LinkedIn, resume link, match score, and submission timestamp. From this dashboard, you can sort applications, view their details, and quickly access or edit the associated job posting.
+
 ---
-
-## 📄 License
-
-MIT License.
