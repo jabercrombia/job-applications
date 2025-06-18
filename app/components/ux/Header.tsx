@@ -7,8 +7,8 @@ import {
   } from "@/components/ui/navigation-menu"
   
 function Header() {
-    const pathname = usePathname(); // e.g., "/jobs/python"
-    const parts = pathname.split('/').filter(Boolean); // ["jobs", "python"]
+    const pathname = usePathname();
+    const parts = pathname.split('/').filter(Boolean);
     const dashboard = parts[0];
 
     const dashboardnav = {

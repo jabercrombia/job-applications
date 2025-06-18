@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { daysLeftToExpiration } from "@/lib/dateformat";
-import { useEffect, useState } from "react";
 
 type JobEntry = {
   title: string;
@@ -15,15 +14,6 @@ type TableProps = {
 };
 
 export default function Table({ data }: TableProps) {
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const res = await fetch("/api/categories");
-      const data = await res.json();
-    };
-
-    fetchCategories();
-  }, []);
 
   const groupedArr: { [key: string]: JobEntry[] } = {};
 

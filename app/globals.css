@@ -48,3 +48,7 @@ button {
     background-color: #666;
   }
 }
+
+.container.mx-auto {
+  padding: 0 10px;
+}
