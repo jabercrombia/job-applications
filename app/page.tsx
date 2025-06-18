@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ListingTable from "@/app/components/table/ListingTable";
 import Search from "./components/Search";
 import Link from "next/link";
-import Loader from "@/app/components/ux/loader"
+import Loader from "@/app/components/ux/Loader"
 
 export default function Home() {
 
