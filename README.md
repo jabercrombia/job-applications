@@ -2,6 +2,10 @@
 
 ![homepage](/public/screenshot/homepage.png)
 
+## Documentation 
+
+Documentation for this repo can be found [here](https://project-docs-amber.vercel.app/docs/category/job-submission-portal).
+
 A form-based application built with **Next.js (App Router)**, **Supabase**, and a **Python microservice** that scans resumes and matches them against a job description using TF-IDF and cosine similarity. Users upload a PDF and fill in their personal information. The data is stored in Supabase PostgreSQL, and PDFs are saved in Supabase Storage.
 
 ---
