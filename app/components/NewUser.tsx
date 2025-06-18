@@ -8,7 +8,7 @@ import Modal from "./ux/Modal";
 export default function UploadPage(data: {
   jobDescription: string;
   jobTitle: string;
-  jobCategory: string;
+  jobCategory?: string;
 }) {
   const [formData, setFormData] = useState({
     firstName: "",
