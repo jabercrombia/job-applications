@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import ListingTable from "@/app/components/table/ListingTable";
 import Link from "next/link";
-import Loader from "./components/ux/loader";
+import Loader from "./components/ux/Loader";
 
 export default function Home() {
 
