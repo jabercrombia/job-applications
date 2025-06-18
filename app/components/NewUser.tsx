@@ -19,7 +19,7 @@ export default function UploadPage(data: {
     website: "",
     jobDescription: data.jobDescription,
     title: data.jobTitle,
-    category: data.jobCategory,
+    category: data?.jobCategory,
   });
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
