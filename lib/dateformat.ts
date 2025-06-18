@@ -64,9 +64,6 @@ export function formatUTCToMMDDYY(utcString: string): string {
     const day = String(date.getUTCDate()).padStart(2, '0');
     const year = date.getUTCFullYear().toString().slice(-2); 
 
-    const hours = String(date.getUTCHours()).padStart(2, '0');
-    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-
     return `${month}-${day}-${year}`;
 }
 
