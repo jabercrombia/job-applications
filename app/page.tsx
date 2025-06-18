@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import ListingTable from "@/app/components/table/ListingTable";
-import Search from "./components/Search";
 import Link from "next/link";
-import Loader from "@/app/components/ux/Loader"
+import Loader from "./components/ux/loader";
 
 export default function Home() {
 
@@ -54,7 +53,6 @@ export default function Home() {
       <div className="text-center">
         <h1>Find Your Dream Job Today</h1>
         <p>Search job listings and find the perfect match for your career goals.</p>
-        <Search/>
       </div>
       { isLoading ? ( <Loader size={32} className="h-40" />) : (
 
