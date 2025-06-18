@@ -16,11 +16,13 @@ console.log('dashboard',dashboard);
         'listings' : '/dashboard/listings',
         'new posting' : '/dashboard/create-entry',
         'applications' : '/dashboard/applications',
+        'docs' : 'https://project-docs-amber.vercel.app/docs/job-submission-portal/listings'
     }
 
     const nav = {
         'home': '/',
         'login' : '/dashboard/listings',
+        'docs' : 'https://project-docs-amber.vercel.app/docs/job-submission-portal/listings',
     }
 
     return (
@@ -31,7 +33,13 @@ console.log('dashboard',dashboard);
                         <NavigationMenuList>
                         {Object.entries(dashboardnav).map(([label, path], index) => (
                             <NavigationMenuItem key={index}>
-                            <a href={path}>{label}</a>
+                            <a
+                                href={path}
+                                target={label === 'docs' ? '_blank' : undefined}
+                                rel={label === 'docs' ? 'noopener noreferrer' : undefined}
+                                >
+                                {label}
+                            </a>
                             </NavigationMenuItem>
                         ))}
                         </NavigationMenuList>
@@ -41,7 +49,13 @@ console.log('dashboard',dashboard);
                         <NavigationMenuList>
                         {Object.entries(nav).map(([label, path], index) => (
                             <NavigationMenuItem key={index}>
-                            <a href={path}>{label}</a>
+                            <a
+                                href={path}
+                                target={label === 'docs' ? '_blank' : undefined}
+                                rel={label === 'docs' ? 'noopener noreferrer' : undefined}
+                                >
+                                {label}
+                            </a>
                             </NavigationMenuItem>
                         ))}
                         </NavigationMenuList>
