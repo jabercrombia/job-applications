@@ -1,22 +1,23 @@
-
 # Interactive Job Description Submission Portal
+
 ![homepage](/public/screenshot/homepage.png)
-A simple form-based application built with **Next.js (App Router)**, **Supabase**, and a Python microservice that scans resumes and matches them against a job description using TF-IDF and cosine similarity. Users upload a PDF and fill in personal info. The data is saved in Supabase PostgreSQL, and PDFs are stored in Supabase Storage.
+
+A form-based application built with **Next.js (App Router)**, **Supabase**, and a **Python microservice** that scans resumes and matches them against a job description using TF-IDF and cosine similarity. Users upload a PDF and fill in their personal information. The data is stored in Supabase PostgreSQL, and PDFs are saved in Supabase Storage.
 
 ---
 
-## 🚀 Features
+## Features
 
-- 📄 PDF file upload
-- 👤 Collects first name, last name, email, phone, LinkedIn, and website
-- 💾 Stores files in Supabase Storage
-- 🗃️ Saves metadata to a `resume_users` table
-- 🧠 Python backend with resume/job description matching
-- 🌗 Responsive dark mode support
+- PDF file upload
+- Collects first name, last name, email, phone number, LinkedIn, and website
+- Stores resumes in Supabase Storage
+- Saves metadata in the `resume_users` table
+- Python backend performs job description matching
+- Responsive layout with dark mode support
 
 ---
 
-## 🛠️ Technologies
+## Technologies
 
 - [Next.js 13+ (App Router)](https://nextjs.org/docs/app)
 - [Supabase](https://supabase.com/)
@@ -30,9 +31,9 @@ A simple form-based application built with **Next.js (App Router)**, **Supabase*
 
 ---
 
-## 🧰 Getting Started
+## Getting Started
 
-### 1. Clone the repo
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/yourusername/supabase-upload-app.git
@@ -43,17 +44,15 @@ cd supabase-upload-app
 
 ### 2. Frontend Setup (Next.js)
 
-#### Install dependencies
+#### Install Dependencies
 
 ```bash
 npm install
-# or
-yarn
 ```
 
-#### Setup `.env.local`
+#### Environment Configuration
 
-Create a `.env.local` file in the root of your project with the following:
+Create a `.env.local` file at the root of the project:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
@@ -61,12 +60,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_public_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 ```
 
-> ✅ `SUPABASE_SERVICE_ROLE_KEY` is **server-side only** — use it only inside API routes or server actions.
+> Note: `SUPABASE_SERVICE_ROLE_KEY` should only be used in server routes or server actions.
 
 #### Configure Supabase
 
-1. Create a bucket: `resume-uploads`
-2. Create a table: `resume_users` with fields:
+1. Create a storage bucket named: `resume-uploads`
+2. Create a table called: `resume_users` with the following fields:
    - `id` (uuid, primary key, default: `uuid_generate_v4()`)
    - `firstName` (text)
    - `lastName` (text)
@@ -77,7 +76,7 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
    - `pdf_path` (text)
    - `match_score` (float4)
 
-3. Enable Row Level Security and add an `INSERT` policy:
+3. Enable Row Level Security (RLS) and apply an insert policy:
 
 ```sql
 create policy "Allow insert for authenticated"
@@ -86,27 +85,27 @@ for insert
 with check (auth.role() = 'authenticated');
 ```
 
-Or bypass RLS using the **Service Role Key** in server routes (recommended for admin-level inserts).
+Alternatively, you can use the **Service Role Key** to bypass RLS in server-side scripts.
 
-#### Run the frontend
+#### Run the Frontend
 
 ```bash
 npm run dev
 ```
 
-Then open [http://localhost:3000](http://localhost:3000) in your browser.
+Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
 ### 3. Python Resume Scanner Setup
 
-#### Navigate to the Python service
+#### Navigate to the Python Service Directory
 
 ```bash
 cd pdf-reader
 ```
 
-#### Create a virtual environment and install dependencies
+#### Setup Virtual Environment and Dependencies
 
 ```bash
 python3 -m venv venv
@@ -126,7 +125,9 @@ scikit-learn
 supabase
 ```
 
-#### Create a `.env` file
+#### Add Environment Variables
+
+Create a `.env` file in the `pdf-reader` directory:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
@@ -134,34 +135,34 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 JOB_DESCRIPTION=Your target job description for matching
 ```
 
-#### Run the FastAPI server
+#### Run the FastAPI Server
 
 ```bash
 uvicorn main:app --reload
 ```
 
-This will start your server at [http://127.0.0.1:8000](http://127.0.0.1:8000)
+The server will start at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
 
-## 📁 File Structure
+## File Structure
 
 ```bash
 ├── app/
 │   └── api/
 │       └── submit-user/
-│           └── route.ts         # API handler for submitting metadata
+│           └── route.ts
 ├── components/
-│   └── NewUser.tsx              # Form component
+│   └── NewUser.tsx
 ├── users/
-│   └── page.tsx                 # User Table
+│   └── page.tsx
 ├── lib/
-│   ├── supabase.ts              # Client for client-side usage
-│   └── supabase-admin.ts        # Admin client with service role
-├── pdf-reader/                  # Python microservice
-│   ├── main.py                  # FastAPI entry point
-│   ├── requirements.txt         # Python dependencies
-│   └── .env                     # Environment variables
+│   ├── supabase.ts
+│   └── supabase-admin.ts
+├── pdf-reader/
+│   ├── main.py
+│   ├── requirements.txt
+│   └── .env
 ├── public/
 ├── styles/
 │   └── _variables.scss
@@ -175,15 +176,25 @@ This will start your server at [http://127.0.0.1:8000](http://127.0.0.1:8000)
 ---
 
 ## Listings Page
-![homepage](/public/screenshot/listings.png)
-This page displays a list of all job posts. Each listing includes key details like title, category, and submission date. You can view or edit any job post directly from this page.
+
+![listings](/public/screenshot/listings.png)
+
+Displays all job posts with details such as title, category, and submission date. You can view or edit each job post directly from this page.
+
+---
 
 ## Create Job Entry
-![entry](/public/screenshot/entry.png)
- Fill out the required fields such as job title, category, description, and expiration date. Once submitted, the job entry will be saved to the database and automatically appear in the main listings table, where it can be viewed, edited, or deleted as needed.
 
- ## Applications
- ![application](/public/screenshot/application.png)
-The Application Dashboard displays a comprehensive list of all job applications submitted through the platform. Each entry includes candidate details such as name, email, LinkedIn, resume link, match score, and submission timestamp. From this dashboard, you can sort applications, view their details, and quickly access or edit the associated job posting.
+![entry](/public/screenshot/entry.png)
+
+Add new job listings by filling out required fields such as title, category, description, and expiration date. Submitted jobs are stored in the database and immediately appear in the listings table.
+
+---
+
+## Applications Dashboard
+
+![application](/public/screenshot/application.png)
+
+Shows a list of all submitted job applications. Each entry includes candidate information (name, email, LinkedIn), resume file path, match score, and submission timestamp. The dashboard also allows sorting, filtering, and accessing related job posts.
 
 ---
