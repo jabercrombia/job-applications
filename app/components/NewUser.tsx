@@ -68,8 +68,6 @@ export default function UploadPage(data: {
       formPayload.append("pdf", pdfFile);
     }
 
-    console.log("formPayload", formPayload);
-
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_PDF_SCAN_URL}/scan`, {
         method: "POST",
