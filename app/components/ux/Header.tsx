@@ -10,7 +10,7 @@ function Header() {
     const pathname = usePathname();
     const parts = pathname.split('/').filter(Boolean);
     const dashboard = parts[0];
-
+console.log('dashboard',dashboard);
     const dashboardnav = {
         'home': '/',
         'listings' : '/dashboard/listings',
@@ -26,7 +26,7 @@ function Header() {
     return (
         <header>
             <div className='container mx-auto'>
-                {dashboard ? (
+                {dashboard == 'dashboard' ? (
                     <NavigationMenu>
                         <NavigationMenuList>
                         {Object.entries(dashboardnav).map(([label, path], index) => (

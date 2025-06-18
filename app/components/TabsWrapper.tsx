@@ -40,6 +40,7 @@ export default function TabsWrapper({ entries,}: {
       items: {
         description: string;
         title: string;
+        category: string;
         _id: number;
       }[];
     };
@@ -65,7 +66,7 @@ export default function TabsWrapper({ entries,}: {
           <Tab label="Apply" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      {entries.jobDescriptionCollection.items.map((entry : {description: string, title: string; _id: number}) => (
+      {entries.jobDescriptionCollection.items.map((entry : {category: string, description: string, title: string; _id: number}) => (
         <div key={entry._id} className="p-4 m-2 rounded">
           <h2 className="font-semibold">{entry.title}</h2>
           <CustomTabPanel value={value} index={0}>
@@ -73,7 +74,7 @@ export default function TabsWrapper({ entries,}: {
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
             <h2>Submit an Application</h2>
-            <NewUser jobTitle="slug" jobDescription={entry.description} />
+            <NewUser jobTitle={entry.title} jobDescription={entry.description} jobCategory={entry.category} />
           </CustomTabPanel>
         </div>
       ))}

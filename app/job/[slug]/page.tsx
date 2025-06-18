@@ -19,6 +19,7 @@ export default function Home() {
     description: string;
     expiration: string;
     created_at?: string;
+    category?: string;
   } | null>(null);
 
   const [loading, setLoading] = useState(true);

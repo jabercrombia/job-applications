@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Modal from "./ux/Modal";
 
 export default function UploadPage(data: {
   jobDescription: string;
@@ -24,8 +25,9 @@ export default function UploadPage(data: {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [pdfFile, setPdfFile] = useState<File | null>(null);
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -41,7 +43,6 @@ export default function UploadPage(data: {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
     setFormData({
       firstName: "",
       lastName: "",
@@ -78,19 +79,18 @@ export default function UploadPage(data: {
       const data = await res.json();
 
       if (res.ok) {
-        setMessage(`Thank you`);
+        setShowModal(true);
       } else {
-        setMessage(`Error: ${data.error || "Failed to scan"}`);
       }
     } catch (err) {
       console.error(err);
-      setMessage("Unexpected error");
     }
 
     setLoading(false);
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit} className="space-y-4">
       <Input
         name="firstName"
@@ -141,7 +141,14 @@ export default function UploadPage(data: {
       <Button type="submit" disabled={loading}>
         {loading ? "Saving..." : "Submit"}
       </Button>
-      {message && <p>{message}</p>}
     </form>
+    <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <h2 className="text-xl font-bold mb-2">Submission Successful</h2>
+        <p>Thank you for submitting your resume. We’ll be in touch!</p>
+        <Button onClick={() => setShowModal(false)} className="mt-4">
+          Close
+        </Button>
+      </Modal>
+    </>
   );
 }

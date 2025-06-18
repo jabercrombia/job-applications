@@ -14,9 +14,15 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import '../../../styles/components/table.scss';
 
+import Loader from "@/app/components/ux/Loader";
+
+
 const categories = ['first name', 'last name', 'email', 'phone', 'linkedIn','title', 'category','website', 'resume', 'match score', 'submitted at'];
 
 export default function Home() {
+
+  const [isLoading, setIsLoading] = useState(true);
+
   const [users, setUsers] = useState<Array<{
     id: string;
     firstName: string;
@@ -58,18 +64,25 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const res = await fetch('/api/users')
-      const data = await res.json()
-      setUsers(data)
-    }
+    const fetchEntry = async () => {
+      try {
+        const res = await fetch('/api/users')
+        const data = await res.json()
+        setUsers(data)
+      } catch (error) {
+        console.error("Error fetching applications entries:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    fetchUsers()
-  }, [])
+    fetchEntry();
+  }, []);
 
   return (
     <div className="container mx-auto">
       <h1>Applications</h1>
+       { isLoading ? ( <Loader size={32} className="h-40" />) : (
       <TableContainer className='border-solid border-1 border-gray-300'>
         <Table sx={{ minWidth: 650 }} stickyHeader aria-label="sticky table">
           <TableHead className='uppercase'>
@@ -125,6 +138,7 @@ export default function Home() {
           </TableBody>
         </Table>
     </TableContainer>
+       )}
 
     </div>
   )
