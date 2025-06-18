@@ -74,7 +74,7 @@ export default function UploadPage(data: {
         body: formPayload,
       });
 
-      const data = await res.json();
+
 
       if (res.ok) {
         setShowModal(true);
