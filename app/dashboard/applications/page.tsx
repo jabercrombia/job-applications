@@ -128,7 +128,7 @@ export default function Home() {
               <TableCell>{user.linkedIn && <Link href={user.linkedIn}>LinkedIn</Link>}</TableCell>
               <TableCell>{user.category}</TableCell>
               <TableCell>{user.title}</TableCell>
-              <TableCell>{user.website && <Link href={user.website}>Website</Link>}</TableCell>
+              <TableCell>{user.website && <Link href={user.website} target='_blank'>Website</Link>}</TableCell>
               <TableCell>{user.pdf_path && <Link href={`/api/download-resume?path=${user.pdf_path}`}>View</Link>}</TableCell>
               <TableCell>{user.match_score}</TableCell>
               <TableCell>{formatUTCToMMDDYY(user.created_at)}</TableCell>
