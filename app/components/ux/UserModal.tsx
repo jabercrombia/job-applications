@@ -3,7 +3,9 @@
 import React from "react";
 import {formatUTCToMMDDYY} from "@/lib/dateformat";
 import Link from "next/link";
-export default function UserModal({ user, onClose }: { user: any, onClose: () => void }) {
+export default function UserModal({ user, onClose }: { user: {category: string, phone: string, email: string, firstName: string, lastName: string, linkedIn: string, website: string, match_score: string, pdf_path: string, created_at: string}, onClose: () => void }) {
+
+  console.log('user',user);
   if (!user) return null;
 
   return (
