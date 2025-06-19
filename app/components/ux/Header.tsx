@@ -27,7 +27,7 @@ function Header() {
 
   const nav = {
     home: "/",
-    login: "/dashboard/listings",
+    dashboard: "/dashboard/listings",
     docs: "https://project-docs-amber.vercel.app/docs/job-submission-portal/listings",
   };
 

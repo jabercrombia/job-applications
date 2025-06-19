@@ -53,3 +53,5 @@ my_env/
 env/
 */.venv
 .env.local
+sitemap*
+robots.txt
