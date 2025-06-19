@@ -221,7 +221,9 @@ export default function Home() {
           </Table>
         </TableContainer>
       )}
-      {showModal && <UserModal user={selectedUser} onClose={closeModal} />}
+        {showModal && selectedUser && (
+            <UserModal user={selectedUser} onClose={closeModal} />
+        )}
     </div>
   );
 }
