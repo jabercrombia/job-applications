@@ -70,10 +70,25 @@ export default function Home() {
     }));
   };
 
-  const [selectedUser, setSelectedUser] = useState<any>(null);
+  type User = {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    linkedIn?: string;
+    website?: string;
+    pdf_path?: string;
+    match_score: number;
+    created_at: string;
+    category: string;
+    title: string;
+  };
+
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  const openModal = (user: any) => {
+  const openModal = (user: User) => {
     setSelectedUser(user);
     setShowModal(true);
   };
@@ -161,12 +176,13 @@ export default function Home() {
                   category: string;
                   title: string;
                 }) => (
-                  <TableRow
-                    key={user.id}
-                    
-                  >
-                    <TableCell><ExternalLink className="cursor-pointer"
-                    onClick={() => openModal(user)} /></TableCell>
+                  <TableRow key={user.id}>
+                    <TableCell>
+                      <ExternalLink
+                        className="cursor-pointer"
+                        onClick={() => openModal(user)}
+                      />
+                    </TableCell>
                     <TableCell>{user.firstName}</TableCell>
                     <TableCell>{user.lastName}</TableCell>
                     <TableCell>
