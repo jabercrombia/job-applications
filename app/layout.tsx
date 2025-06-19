@@ -6,13 +6,16 @@ import Footer from "./components/ux/Footer";
 import Header from "./components/ux/Header";
 
 export const metadata = {
-  title: `job application submission`,
+  title: "Job Submission Portal",
   description: `A modern job submission portal where users can easily upload resumes, fill out personal details, and match their skills to job descriptions. Built with Next.js and Python, the platform offers fast, secure, and accurate resume scanning and job matching. Ideal for candidates and recruiters looking for a streamlined application process.`,
   keywords: ['Next.js', 'React', 'JavaScript','postgresql'],
   authors: [{ name: 'Justin Abercrombia', url: 'http://www.github.com/jabercrombia' }],
   creator: 'Justin Abercrombia',
   openGraph: {
     images: '/screenshot/homepage.png',
+  },
+  icons: {
+    icon: `${process.env.SITEURL}/favicon.ico`,  
   },
 };
 
